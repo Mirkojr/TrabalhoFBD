@@ -14,7 +14,7 @@ CREATE TABLE avaliacao (
     tipo VARCHAR(20) NOT NULL,
     dt_aplicacao DATE NOT NULL,
     peso INT NOT NULL,
-)
+);
 
 CREATE TABLE professor(
     cod_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -23,14 +23,14 @@ CREATE TABLE professor(
     especializacao VARCHAR(50) NOT NULL,
     curso_cod_id INT NOT NULL,
     FOREIGN KEY (curso_cod_id) REFERENCES curso(cod_id)
-)
+);
 
 CREATE TABLE material_didatico(
     cod_id INT PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(150) NOT NULL,
     descricao VARCHAR(500) NOT NULL,
     formato VARCHAR(20) NOT NULL
-)
+);
 
 CREATE TABLE aluno(
     cod_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -40,7 +40,7 @@ CREATE TABLE aluno(
     idade TINYINT NOT NULL,
     curso_cod_id INT NOT NULL,
     FOREIGN KEY (curso_cod_id) REFERENCES curso(cod_id)
-)
+);
 
 CREATE TABLE nota(
     cod_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -49,7 +49,7 @@ CREATE TABLE nota(
     avaliacao_cod_id INT NOT NULL,
     FOREIGN KEY (aluno_cod_id) REFERENCES aluno(cod_id),
     FOREIGN KEY (avaliacao_cod_id) REFERENCES avaliacao(cod_id)
-)
+);
 
 CREATE TABLE projeto_de_pesquisa(
     cod_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -62,7 +62,7 @@ CREATE TABLE projeto_de_pesquisa(
     professor_cod_id INT NOT NULL,
     aluno_cod_id INT NOT NULL,
     estado VARCHAR(50) CHECK (estado IN ('planejado', 'andamento', 'finalizado')) NOT NULL,
-)
+);
 
 CREATE TABLE turma(
     cod_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -72,4 +72,28 @@ CREATE TABLE turma(
     capacidade INT NOT NULL,
     estado VARCHAR(50) CHECK (estado IN ('aberta', 'fechada')) NOT NULL,
     FOREIGN KEY (curso_cod_id) REFERENCES curso(cod_id)
-)
+);
+
+CREATE TABLE sala_de_aula(
+    cod_id INT PRIMARY KEY AUTO_INCREMENT,
+    localizacao VARCHAR(100) NOT NULL,
+    capacidade INT NOT NULL
+    tp_lousa VARCHAR(50) NOT NULL,
+    tp_estrutura VARCHAR(50) CHECK (tp_estrutura IN ('audio', 'tradicional', 'laboratorio')) NOT NULL,
+);
+
+CREATE TABLE disciplina(
+    codigo VARCHAR(10) PRIMARY KEY,  -- Ex.: "CS101"
+    nome VARCHAR(100) NOT NULL,
+    especializacao VARCHAR(50) NOT NULL,
+    carga_horaria INT NOT NULL
+    ementa TEXT NOT NULL,
+);
+
+CREATE TABLE alunoProjeto(
+    aluno_cod_id INT NOT NULL,
+    projeto_cod_id INT NOT NULL,
+    PRIMARY KEY (aluno_cod_id, projeto_cod_id),
+    FOREIGN KEY (aluno_cod_id) REFERENCES aluno(cod_id),
+    FOREIGN KEY (projeto_cod_id) REFERENCES projeto_de_pesquisa(cod_id)
+);
