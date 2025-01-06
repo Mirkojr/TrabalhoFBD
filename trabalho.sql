@@ -97,3 +97,11 @@ CREATE TABLE alunoProjeto(
     FOREIGN KEY (aluno_cod_id) REFERENCES aluno(cod_id),
     FOREIGN KEY (projeto_cod_id) REFERENCES projeto_de_pesquisa(cod_id)
 );
+
+CREATE TABLE professorProjeto (
+    projeto_cod_id INT NOT NULL,
+    professor_cod_id INT NOT NULL,
+    PRIMARY KEY (projeto_cod_id, professor_cod_id),
+    FOREIGN KEY (projeto_cod_id) REFERENCES projeto_de_pesquisa(cod_id),
+    FOREIGN KEY (professor_cod_id) REFERENCES professor(cod_id)
+);
