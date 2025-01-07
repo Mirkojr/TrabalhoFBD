@@ -11,7 +11,7 @@ CREATE TABLE curso (
 
 CREATE TABLE avaliacao (
     cod_id INT PRIMARY KEY AUTO_INCREMENT,
-    tipo VARCHAR(20) NOT NULL,
+    tipo VARCHAR(20) CHECK (tipo IN ('prova', 'trabalho')) NOT NULL,
     dt_aplicacao DATE NOT NULL,
     peso INT NOT NULL,
 );
@@ -93,15 +93,17 @@ CREATE TABLE disciplina(
 CREATE TABLE alunoProjeto(
     aluno_cod_id INT NOT NULL,
     projeto_cod_id INT NOT NULL,
+    funcao VARCHAR(500) NOT NULL,
     PRIMARY KEY (aluno_cod_id, projeto_cod_id),
     FOREIGN KEY (aluno_cod_id) REFERENCES aluno(cod_id),
     FOREIGN KEY (projeto_cod_id) REFERENCES projeto_de_pesquisa(cod_id)
 );
 
-CREATE TABLE professorProjeto (
-    projeto_cod_id INT NOT NULL,
+CREATE TABLE professorProjeto(
     professor_cod_id INT NOT NULL,
-    PRIMARY KEY (projeto_cod_id, professor_cod_id),
-    FOREIGN KEY (projeto_cod_id) REFERENCES projeto_de_pesquisa(cod_id),
-    FOREIGN KEY (professor_cod_id) REFERENCES professor(cod_id)
+    projeto_cod_id INT NOT NULL,
+    funcao VARCHAR(500) NOT NULL,
+    PRIMARY KEY (professor_cod_id, projeto_cod_id),
+    FOREIGN KEY (professor_cod_id) REFERENCES professor(cod_id),
+    FOREIGN KEY (projeto_cod_id) REFERENCES projeto_de_pesquisa(cod_id)
 );
