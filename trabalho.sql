@@ -99,6 +99,22 @@ CREATE TABLE alunoProjeto(
     FOREIGN KEY (projeto_cod_id) REFERENCES projeto_de_pesquisa(cod_id)
 );
 
+CREATE TABLE alunoTurma(
+    aluno_cod_id INT NOT NULL,
+    turma_cod_id INT NOT NULL,
+    PRIMARY KEY (aluno_cod_id,turma_cod_id),
+    FOREIGN KEY (aluno_cod_id) REFERENCES aluno(cod_id),
+    FOREIGN KEY (turma_cod_id) REFERENCES turma(cod_id),
+);
+
+CREATE TABLE professorTurma(
+    professor_cod_id INT NOT NULL,
+    turma_cod_id INT NOT NULL,
+    PRIMARY KEY (professor_cod_id, turma_cod_id),
+    FOREIGN KEY (professor_cod_id) REFERENCES professor(cod_id),
+    FOREIGN KEY (turma_cod_id) REFERENCES turma(cod_id)
+);
+
 CREATE TABLE professorProjeto(
     professor_cod_id INT NOT NULL,
     projeto_cod_id INT NOT NULL,
@@ -106,4 +122,36 @@ CREATE TABLE professorProjeto(
     PRIMARY KEY (professor_cod_id, projeto_cod_id),
     FOREIGN KEY (professor_cod_id) REFERENCES professor(cod_id),
     FOREIGN KEY (projeto_cod_id) REFERENCES projeto_de_pesquisa(cod_id)
+);
+
+CREATE TABLE professorMaterial_didatico(
+    professor_cod_id INT NOT NULL,
+    material_didatico_cod_id INT NOT NULL,
+    PRIMARY KEY (professor_cod_id, material_didatico_cod_id),
+    FOREIGN KEY (professor_cod_id) REFERENCES professor(cod_id),
+    FOREIGN KEY (material_didatico_cod_id) REFERENCES material_didatico(cod_id)
+);
+
+CREATE TABLE material_didaticoTurma(
+    turma_cod_id INT NOT NULL,
+    material_didatico_cod_id INT NOT NULL,
+    PRIMARY KEY (turma_cod_id,material_didatico_cod_id),
+    FOREIGN KEY (turma_cod_id) REFERENCES turma(cod_id)
+    FOREIGN KEY (material_didatico_cod_id) REFERENCES material_didatico(cod_id)
+);
+
+CREATE TABLE TurmaDisciplina(
+    turma_cod_id INT NOT NULL,
+    disciplina_cod_id INT NOT NULL,
+    PRIMARY KEY (disciplina_cod_id, turma_cod_id),
+    FOREIGN KEY (disciplina_cod_id) REFERENCES disciplina(codigo),
+    FOREIGN KEY (turma_cod_id) REFERENCES turma(cod_id)
+);
+
+CREATE TABLE TurmaAvaliacao(
+    turma_cod_id INT NOT NULL,
+    avaliacao_cod_id INT NOT NULL,
+    PRIMARY KEY (avaliacao_cod_id, turma_cod_id),
+    FOREIGN KEY (avaliacao_cod_id) REFERENCES avaliacao(cod_id),
+    FOREIGN KEY (turma_cod_id) REFERENCES turma(cod_id)
 );
