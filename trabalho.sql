@@ -5,7 +5,7 @@ CREATE TABLE curso (
     cod_id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     coordenador VARCHAR(100) NOT NULL,
-    regime VARCHAR(20) NOT NULL,
+    regime VARCHAR(20) CHECK (regime IN ('semestral', 'anual') NOT NULL,
     duracao TINYINT NOT NULL
 );
 
