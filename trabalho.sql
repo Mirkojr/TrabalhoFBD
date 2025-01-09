@@ -29,7 +29,8 @@ CREATE TABLE material_didatico(
     cod_id INT PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(150) NOT NULL,
     descricao VARCHAR(500) NOT NULL,
-    formato VARCHAR(20) NOT NULL
+    formato VARCHAR(20) CHECK(formato IN (PDF, vídeo, áudio, material, externo
+e outros)) NOT NULL
 );
 
 CREATE TABLE aluno(
