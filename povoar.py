@@ -28,15 +28,7 @@ class Povoar:
 
     def criar_curso(self):
         cursos = []
-        
-        conn = psycopg2.connect(
-            dbname="496563",
-            user="496563",
-            password="496563",
-            host="200.129.44.249",
-            port="5432"
-        )
-        cur = conn.cursor()
+       
         
         for _ in range(10):
             curso = {
