@@ -1,10 +1,10 @@
 import pyodbc
 
-def executar_comando_sql(server, username, password, comando_sql):
+def executar_comando_sql(server, database, username, password, comando_sql):
     try:
         # Conecta ao servidor SQL Server
         conn = pyodbc.connect(
-            f'DRIVER=ODBC Driver 17 for SQL Server;SERVER={server};UID={username};PWD={password}'
+            f'DRIVER=ODBC Driver 18 for SQL Server;SERVER={server};DATABASE={database};UID={username};PWD={password}'
         )
         conn.autocommit = True  # Permitir execução fora de transações
 
@@ -57,6 +57,7 @@ FILEGROUP FileGroup2 (
     SIZE = 500MB, MAXSIZE = 5GB, FILEGROWTH = 100MB
 ),
 FILEGROUP FileGroup3 (
+    -- Filegroup que pode ser usado para futuras expansões ou tabelas menos acessadas.
     NAME = FileGroup3_File1,
     FILENAME = 'C:\\SQLServer\\FileGroup3_File1.ndf',
     SIZE = 500MB, MAXSIZE = 5GB, FILEGROWTH = 100MB
@@ -67,6 +68,7 @@ FILEGROUP FileGroup3 (
     SIZE = 500MB, MAXSIZE = 5GB, FILEGROWTH = 100MB
 ),
 FILEGROUP IndexFileGroup (
+    -- Filegroup específico para armazenar índices e otimizar desempenho.
     NAME = Index_File1,
     FILENAME = 'C:\\SQLServer\\Index_File1.ndf',
     SIZE = 500MB, MAXSIZE = 5GB, FILEGROWTH = 100MB
@@ -84,7 +86,7 @@ LOG ON (
 
 USE MeuBancoAvancado;
 
--- Removendo tabelas se existirem
+-- Removendo tabelas se existirem para garantir recriação sem conflitos.
 DROP TABLE IF EXISTS Aluno_Turma;
 DROP TABLE IF EXISTS Turma;
 DROP TABLE IF EXISTS Disciplina;
@@ -92,7 +94,7 @@ DROP TABLE IF EXISTS Professor;
 DROP TABLE IF EXISTS Aluno;
 DROP TABLE IF EXISTS Curso;
 
--- Criando as tabelas associadas a diferentes Filegroups
+-- 📌 Criando tabelas distribuídas entre os filegroups definidos para melhor desempenho e organização.
 CREATE TABLE Curso (
     id INT PRIMARY KEY,
     nome VARCHAR(100),
@@ -163,8 +165,9 @@ CREATE TABLE Aluno_Turma (
 
 # Executa a criação do banco e das tabelas
 executar_comando_sql(
-    server='localhost',        # Servidor ou IP
-    username='sa',             # Nome de usuário
-    password='MinhaSenha123',  # Senha
+    server='server',        # Servidor ou IP
+    database = 'database',
+    username='user',             # Nome de usuário
+    password='pwd',  # Senha
     comando_sql=comando_sql
 )
